@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/components/nodata_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -75,6 +76,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       gridViewGetminiapplistbyuserResponse.jsonBody,
                       r'''$.data''',
                     ).toList();
+                    if (appList.isEmpty) {
+                      return const NodataWidget();
+                    }
                     return RefreshIndicator(
                       onRefresh: () async {
                         setState(() => _model.apiRequestCompleter = null);
