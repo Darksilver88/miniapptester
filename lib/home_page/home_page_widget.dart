@@ -219,8 +219,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ).toString(),
                                   );
                                   shouldSetState = true;
-                                  FFAppState().installedAppDataList =
-                                      _model.appData2!.toList().cast<dynamic>();
+                                  FFAppState().addToInstalledAppDataList(
+                                      _model.appData2!);
                                   _model.apiResulttm4 =
                                       await InstallMiniAppCall.call(
                                     miniappId: getJsonField(
