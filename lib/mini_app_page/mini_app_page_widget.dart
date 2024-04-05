@@ -1,9 +1,17 @@
+import 'package:mini_app_tester/index.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
 import 'package:flutter/material.dart';
 import 'mini_app_page_model.dart';
 export 'mini_app_page_model.dart';
+
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:mini_app_tester/custom_toon/custom_toon.dart';
+
+
 
 class MiniAppPageWidget extends StatefulWidget {
   const MiniAppPageWidget({
@@ -24,16 +32,61 @@ class _MiniAppPageWidgetState extends State<MiniAppPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final InAppLocalhostServer localhostServer = InAppLocalhostServer();
+  InAppWebViewController? _webViewController;
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => MiniAppPageModel());
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await localhostServer.start();
+    });
+  }
+
+  void _onMiniAppCreated(){
+    _webViewController?.evaluateJavascript(source: 'window.app.onLoad()');
+  }
+
+  void _onMiniAppHide(){
+    _webViewController?.evaluateJavascript(source: 'window.app.onHide()');
+  }
+
+  void _initCommunicationChannel(InAppWebViewController controller){
+    controller.addJavaScriptHandler(handlerName: "post", callback: (args) {
+      debugPrint("post From the JavaScript side:");
+      debugPrint("$args");
+      //http request
+      return args;
+    });
+
+    controller.addJavaScriptHandler(handlerName: "get", callback: (args) async {
+      debugPrint("get From the JavaScript side:");
+      debugPrint("$args");
+      //http request
+      print(args[0]["url"]);
+      print(args[0]["data"]);
+      var rs = await fetchData(args[0]["url"], args[0]["data"]);
+      return rs;
+    });
+
+    controller.addJavaScriptHandler(handlerName: "request", callback: (args) async {
+      debugPrint("request From the JavaScript side:");
+      debugPrint("$args");
+      //request to use core feature
+      var rs = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => QRCodePageWidget()),
+      );
+      return rs;
+    });
   }
 
   @override
   void dispose() {
     _model.dispose();
-
+    localhostServer.close();
     super.dispose();
   }
 
@@ -64,13 +117,25 @@ class _MiniAppPageWidgetState extends State<MiniAppPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: FlutterFlowWebView(
-            content: 'https://flutter.dev',
-            bypass: false,
-            width: MediaQuery.sizeOf(context).width * 1.0,
-            height: MediaQuery.sizeOf(context).height * 1.0,
-            verticalScroll: false,
-            horizontalScroll: false,
+          child: InAppWebView(
+            initialUrlRequest: URLRequest(url: Uri.parse("http://localhost:8080${widget.url}")),
+            onWebViewCreated: (controller) {
+              _webViewController = controller;
+              controller.setOptions(
+                options: InAppWebViewGroupOptions(
+                  crossPlatform: InAppWebViewOptions(cacheEnabled: true, supportZoom: false),
+                ),
+              );
+            },
+            onLoadStop: (controller, url) {
+              print("onLoadStop : $url");
+              _onMiniAppCreated();
+              _initCommunicationChannel(controller);
+            },
+            onConsoleMessage: (controller, msg) {
+              print("onConsoleMessage");
+              print(msg);
+            },
           ),
         ),
       ),
