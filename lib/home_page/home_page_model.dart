@@ -13,12 +13,12 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   final unfocusNode = FocusNode();
   Completer<ApiCallResponse>? apiRequestCompleter;
-  // Stores action output result for [Custom Action - getAppInstalledIndex] action in Container widget.
-  int? appIndex;
   // Stores action output result for [Custom Action - checkIsInstalled] action in Container widget.
   String? installedPath;
   // Stores action output result for [Custom Action - installApp] action in Container widget.
   String? path;
+  // Stores action output result for [Custom Action - getAppInstalledIndex] action in Container widget.
+  int? appIndex;
 
   @override
   void initState(BuildContext context) {}
