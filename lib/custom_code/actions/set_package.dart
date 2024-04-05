@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<int> getAppInstalledIndex(String? appID) async {
+Future setPackage() async {
   // Add your function code here!
-  return 0;
 }

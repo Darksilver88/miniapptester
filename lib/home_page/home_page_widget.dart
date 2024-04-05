@@ -3,8 +3,10 @@ import '/components/nodata_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -36,6 +38,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -50,8 +54,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             child: FutureBuilder<ApiCallResponse>(
               future:
                   (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
-                        ..complete(GetminiapplistbyuserCall.call(
-                          userID: 1,
+                        ..complete(GetMiniAppListByUserCall.call(
+                          userID: '1',
                         )))
                       .future,
               builder: (context, snapshot) {
@@ -69,11 +73,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ),
                   );
                 }
-                final gridViewGetminiapplistbyuserResponse = snapshot.data!;
+                final gridViewGetMiniAppListByUserResponse = snapshot.data!;
                 return Builder(
                   builder: (context) {
                     final appList = getJsonField(
-                      gridViewGetminiapplistbyuserResponse.jsonBody,
+                      gridViewGetMiniAppListByUserResponse.jsonBody,
                       r'''$.data''',
                     ).toList();
                     if (appList.isEmpty) {
@@ -108,48 +112,103 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               var shouldSetState = false;
-                              _model.installedPath =
-                                  await actions.checkIsInstalled(
+                              _model.isInstalled =
+                                  await actions.checkIsInstalledApp(
                                 getJsonField(
                                   appListItem,
                                   r'''$.app_id''',
                                 ).toString(),
                               );
                               shouldSetState = true;
-                              if (_model.installedPath != null &&
-                                  _model.installedPath != '') {
-                                _model.tmpPath = _model.installedPath;
+                              if (_model.isInstalled!) {
+                                _model.appData =
+                                    await actions.getAppMinifestData(
+                                  getJsonField(
+                                    appListItem,
+                                    r'''$.app_id''',
+                                  ).toString(),
+                                );
+                                shouldSetState = true;
+                                _model.apiResult2ow =
+                                    await InstallMiniAppCall.call(
+                                  miniappId: getJsonField(
+                                    appListItem,
+                                    r'''$.app_id''',
+                                  ).toString(),
+                                  userId: '1',
+                                  installedPath: getJsonField(
+                                    _model.appData,
+                                    r'''$.path''',
+                                  ).toString(),
+                                );
+                                shouldSetState = true;
+                                setState(
+                                    () => _model.apiRequestCompleter = null);
+                                await _model.waitForApiRequestCompleted();
+
+                                context.pushNamed(
+                                  'MiniAppPage',
+                                  queryParameters: {
+                                    'appName': serializeParam(
+                                      getJsonField(
+                                        appListItem,
+                                        r'''$.title''',
+                                      ).toString(),
+                                      ParamType.String,
+                                    ),
+                                    'url': serializeParam(
+                                      getJsonField(
+                                        _model.appData,
+                                        r'''$.path''',
+                                      ).toString(),
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               } else {
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return WebViewAware(
-                                              child: AlertDialog(
-                                                title: const Text('Install ?'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext,
-                                                            false),
-                                                    child: const Text('Cancel'),
+                                _model.isGranted =
+                                    await actions.checkPermissionStorage();
+                                shouldSetState = true;
+                                if (_model.isGranted!) {
+                                  if (getJsonField(
+                                        appListItem,
+                                        r'''$.is_install''',
+                                      ) !=
+                                      functions.isTrue()) {
+                                    var confirmDialogResponse =
+                                        await showDialog<bool>(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return WebViewAware(
+                                                  child: AlertDialog(
+                                                    title: const Text('Install App?'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                false),
+                                                        child: const Text('Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                true),
+                                                        child: const Text('Confirm'),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext,
-                                                            true),
-                                                    child: const Text('Confirm'),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                if (confirmDialogResponse) {
-                                  _model.path = await actions.installApp(
+                                                );
+                                              },
+                                            ) ??
+                                            false;
+                                    if (!confirmDialogResponse) {
+                                      if (shouldSetState) setState(() {});
+                                      return;
+                                    }
+                                  }
+                                  _model.appData2 = await actions.installApp(
                                     getJsonField(
                                       appListItem,
                                       r'''$.url''',
@@ -160,32 +219,47 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ).toString(),
                                   );
                                   shouldSetState = true;
-                                  _model.tmpPath = _model.path;
-                                } else {
-                                  if (shouldSetState) setState(() {});
-                                  return;
+                                  FFAppState().installedAppDataList =
+                                      _model.appData2!.toList().cast<dynamic>();
+                                  _model.apiResulttm4 =
+                                      await InstallMiniAppCall.call(
+                                    miniappId: getJsonField(
+                                      appListItem,
+                                      r'''$.app_id''',
+                                    ).toString(),
+                                    userId: '1',
+                                    installedPath: getJsonField(
+                                      _model.appData2,
+                                      r'''$.path''',
+                                    ).toString(),
+                                  );
+                                  shouldSetState = true;
+                                  setState(
+                                      () => _model.apiRequestCompleter = null);
+                                  await _model.waitForApiRequestCompleted();
+
+                                  context.pushNamed(
+                                    'MiniAppPage',
+                                    queryParameters: {
+                                      'appName': serializeParam(
+                                        getJsonField(
+                                          appListItem,
+                                          r'''$.title''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                      'url': serializeParam(
+                                        getJsonField(
+                                          _model.appData2,
+                                          r'''$.path''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
                                 }
                               }
 
-                              context.pushNamed(
-                                'MiniAppPage',
-                                queryParameters: {
-                                  'appName': serializeParam(
-                                    getJsonField(
-                                      appListItem,
-                                      r'''$.title''',
-                                    ).toString(),
-                                    ParamType.String,
-                                  ),
-                                  'url': serializeParam(
-                                    _model.tmpPath,
-                                    ParamType.String,
-                                  ),
-                                }.withoutNulls,
-                              );
-
-                              setState(() => _model.apiRequestCompleter = null);
-                              await _model.waitForApiRequestCompleted();
                               if (shouldSetState) setState(() {});
                             },
                             onLongPress: () async {
@@ -218,21 +292,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ) ??
                                       false;
                               if (confirmDialogResponse) {
-                                _model.appIndex =
-                                    await actions.getAppInstalledIndex(
-                                  getJsonField(
+                                await UninstallAppCall.call(
+                                  appID: getJsonField(
                                     appListItem,
                                     r'''$.app_id''',
                                   ).toString(),
+                                  userID: '1',
                                 );
-                                FFAppState().removeAtIndexFromAppInstalledList(
-                                    _model.appIndex!);
+                                FFAppState()
+                                    .removeAtIndexFromInstalledAppDataList(
+                                        functions.getAppIndex(
+                                            getJsonField(
+                                              appListItem,
+                                              r'''$.app_id''',
+                                            ).toString(),
+                                            FFAppState()
+                                                .installedAppDataList
+                                                .toList()));
                                 setState(
                                     () => _model.apiRequestCompleter = null);
                                 await _model.waitForApiRequestCompleted();
                               }
-
-                              setState(() {});
                             },
                             child: Container(
                               decoration: const BoxDecoration(),

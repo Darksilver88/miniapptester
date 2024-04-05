@@ -19,15 +19,16 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
-      _appInstalledList = prefs.getStringList('ff_appInstalledList')?.map((x) {
-            try {
-              return jsonDecode(x);
-            } catch (e) {
-              print("Can't decode persisted json. Error: $e.");
-              return {};
-            }
-          }).toList() ??
-          _appInstalledList;
+      _installedAppDataList =
+          prefs.getStringList('ff_installedAppDataList')?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _installedAppDataList;
     });
   }
 
@@ -38,45 +39,45 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  List<dynamic> _appInstalledList = [];
-  List<dynamic> get appInstalledList => _appInstalledList;
-  set appInstalledList(List<dynamic> value) {
-    _appInstalledList = value;
+  List<dynamic> _installedAppDataList = [];
+  List<dynamic> get installedAppDataList => _installedAppDataList;
+  set installedAppDataList(List<dynamic> value) {
+    _installedAppDataList = value;
     prefs.setStringList(
-        'ff_appInstalledList', value.map((x) => jsonEncode(x)).toList());
+        'ff_installedAppDataList', value.map((x) => jsonEncode(x)).toList());
   }
 
-  void addToAppInstalledList(dynamic value) {
-    _appInstalledList.add(value);
-    prefs.setStringList('ff_appInstalledList',
-        _appInstalledList.map((x) => jsonEncode(x)).toList());
+  void addToInstalledAppDataList(dynamic value) {
+    _installedAppDataList.add(value);
+    prefs.setStringList('ff_installedAppDataList',
+        _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeFromAppInstalledList(dynamic value) {
-    _appInstalledList.remove(value);
-    prefs.setStringList('ff_appInstalledList',
-        _appInstalledList.map((x) => jsonEncode(x)).toList());
+  void removeFromInstalledAppDataList(dynamic value) {
+    _installedAppDataList.remove(value);
+    prefs.setStringList('ff_installedAppDataList',
+        _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeAtIndexFromAppInstalledList(int index) {
-    _appInstalledList.removeAt(index);
-    prefs.setStringList('ff_appInstalledList',
-        _appInstalledList.map((x) => jsonEncode(x)).toList());
+  void removeAtIndexFromInstalledAppDataList(int index) {
+    _installedAppDataList.removeAt(index);
+    prefs.setStringList('ff_installedAppDataList',
+        _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void updateAppInstalledListAtIndex(
+  void updateInstalledAppDataListAtIndex(
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _appInstalledList[index] = updateFn(_appInstalledList[index]);
-    prefs.setStringList('ff_appInstalledList',
-        _appInstalledList.map((x) => jsonEncode(x)).toList());
+    _installedAppDataList[index] = updateFn(_installedAppDataList[index]);
+    prefs.setStringList('ff_installedAppDataList',
+        _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void insertAtIndexInAppInstalledList(int index, dynamic value) {
-    _appInstalledList.insert(index, value);
-    prefs.setStringList('ff_appInstalledList',
-        _appInstalledList.map((x) => jsonEncode(x)).toList());
+  void insertAtIndexInInstalledAppDataList(int index, dynamic value) {
+    _installedAppDataList.insert(index, value);
+    prefs.setStringList('ff_installedAppDataList',
+        _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 }
 

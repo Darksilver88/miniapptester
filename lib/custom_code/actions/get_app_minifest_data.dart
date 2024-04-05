@@ -7,7 +7,11 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<int> getAppInstalledIndex(String? appID) async {
+Future<dynamic> getAppMinifestData(String? appID) async {
   // Add your function code here!
-  return 0;
+  print("getAppMinifestData");
+  return FFAppState().installedAppDataList.firstWhere(
+        (item) => item['app_id'] == appID, // Check for matching app_id
+        orElse: () => null, // Return null if not found
+      );
 }

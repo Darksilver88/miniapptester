@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<int> getAppInstalledIndex(String? appID) async {
+Future<bool> checkIsInstalledApp(String? appID) async {
   // Add your function code here!
-  return 0;
+  print("checkIsInstalledApp");
+  return FFAppState()
+      .installedAppDataList
+      .any((item) => item['app_id'] == appID);
 }
