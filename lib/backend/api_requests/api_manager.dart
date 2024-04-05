@@ -196,8 +196,6 @@ class ApiManager {
         : (client != null ? client.delete : http.delete);
     final response =
         await makeRequest(Uri.parse(apiUrl), headers: toStringMap(headers));
-    print("response");
-    print(response.body);
     return ApiCallResponse.fromHttpResponse(response, returnBody, decodeUtf8);
   }
 
