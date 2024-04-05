@@ -35,7 +35,8 @@ class _QRCodePageWidgetState extends State<QRCodePageWidget> {
       setState(() {
         _model.qrcodeData = _model.rs;
       });
-      context.safePop();
+
+      Navigator.pop(context,_model.qrcodeData);
     });
   }
 
