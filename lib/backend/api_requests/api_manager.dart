@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:equatable/equatable.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:mini_app_tester/custom_toon/custom_toon.dart';
 
 import '/flutter_flow/uploaded_file.dart';
 
@@ -392,6 +393,9 @@ class ApiManager {
     if (!apiUrl.startsWith('http')) {
       apiUrl = 'https://$apiUrl';
     }
+
+    //custom header
+    headers = generalHeader(headers);
 
     // If we've already made this exact call before and caching is on,
     // return the cached result.

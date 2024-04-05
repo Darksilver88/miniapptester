@@ -6,6 +6,8 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
+import 'dart:io';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
@@ -14,6 +16,9 @@ void main() async {
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
+
+  // fix http api
+  HttpOverrides.global = MyHttpOverrides();
 
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
@@ -72,5 +77,13 @@ class _MyAppState extends State<MyApp> {
       themeMode: _themeMode,
       routerConfig: _router,
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
