@@ -31,8 +31,6 @@ Future<dynamic> installApp(
   if (response.statusCode == 200) {
     url = url!.replaceAll("&download=1", "");
 
-    var zipName = url.toString().split('/').last.replaceAll(".zip", "");
-    print("zipName : $zipName");
     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
     final outFile = File('${appDocumentsDir.path}/$appID.zip');
     await outFile.writeAsBytes(response.bodyBytes, flush: true);
@@ -45,20 +43,12 @@ Future<dynamic> installApp(
     print("unzipPath : $unzipPath");
     var manifestData = {};
     for (final file in archive) {
-      print("file : ${file.name}");
-      final zipFolderName = file.name.toString().split("/")[0];
-      print("zipName : $zipName");
-      print("zipFolderName : $zipFolderName");
-      print("appID : $appID");
-      if (zipName != zipFolderName) {
-        var tmpZipName = zipName.toString().split("(").last;
-        print("tmpZipName $tmpZipName");
-        zipName = zipName.replaceAll("($tmpZipName", "");
-        print("new zipname $zipName");
-      }
-      final fileName = '$unzipPath/${file.name.replaceAll(zipName, appID!)}';
-      if (file.isFile && !fileName.contains("__MACOSX")) {
-        print("fileName : $fileName");
+      if (file.isFile && !file.name.contains("__MACOSX")) {
+        var zipName = file.name.toString().split("/")[0];
+        print("zipName : $zipName");
+        final fileName = '$unzipPath/${file.name.replaceAll(zipName, appID!)}';
+        print("file : ${file.name}");
+        print("fileName >>>>> : $fileName");
         final outFile = File(fileName);
         await outFile.create(recursive: true);
         await outFile.writeAsBytes(file.content);
