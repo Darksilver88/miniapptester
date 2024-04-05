@@ -196,6 +196,8 @@ class ApiManager {
         : (client != null ? client.delete : http.delete);
     final response =
         await makeRequest(Uri.parse(apiUrl), headers: toStringMap(headers));
+    print("response");
+    print(response.body);
     return ApiCallResponse.fromHttpResponse(response, returnBody, decodeUtf8);
   }
 
@@ -396,6 +398,12 @@ class ApiManager {
 
     //custom header
     headers = generalHeader(headers);
+    print("apiUrl >>>");
+    print(apiUrl);
+    print("headers >>>");
+    print(headers);
+    print("body >>>");
+    print(body);
 
     // If we've already made this exact call before and caching is on,
     // return the cached result.
