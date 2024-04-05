@@ -13,12 +13,18 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   final unfocusNode = FocusNode();
   Completer<ApiCallResponse>? apiRequestCompleter;
-  // Stores action output result for [Custom Action - checkIsInstalled] action in Container widget.
-  String? installedPath;
+  // Stores action output result for [Custom Action - checkIsInstalledApp] action in Container widget.
+  bool? isInstalled;
+  // Stores action output result for [Custom Action - getAppMinifestData] action in Container widget.
+  dynamic appData;
+  // Stores action output result for [Backend Call - API (installMiniApp)] action in Container widget.
+  ApiCallResponse? apiResult2ow;
+  // Stores action output result for [Custom Action - checkPermissionStorage] action in Container widget.
+  bool? isGranted;
   // Stores action output result for [Custom Action - installApp] action in Container widget.
-  String? path;
-  // Stores action output result for [Custom Action - getAppInstalledIndex] action in Container widget.
-  int? appIndex;
+  dynamic appData2;
+  // Stores action output result for [Backend Call - API (installMiniApp)] action in Container widget.
+  ApiCallResponse? apiResulttm4;
 
   @override
   void initState(BuildContext context) {}

@@ -25,9 +25,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  archive: ^3.4.9
   auto_size_text: 3.0.0
   cached_network_image: 3.3.1
   collection: 1.18.0
+  device_info_plus: ^9.1.1
+  dots_indicator: ^3.0.0
   equatable: 2.0.5
   file_picker: 6.1.1
   flutter_animate: 4.1.1+1
@@ -49,11 +52,13 @@ dependencies:
   intl: 0.18.1
   json_path: 0.6.2
   mime_type: 1.0.0
+  package_info_plus:
   page_transition: 2.1.0
   path_provider: 2.0.14
   path_provider_android: 2.0.25
   path_provider_foundation: 2.2.2
   path_provider_platform_interface: 2.0.6
+  permission_handler: 10.0.0
   plugin_platform_interface: 2.1.8
   pointer_interceptor: 0.10.1
   provider: 6.0.5
