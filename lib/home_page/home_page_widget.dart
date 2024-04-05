@@ -188,7 +188,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               await _model.waitForApiRequestCompleted();
                               if (shouldSetState) setState(() {});
                             },
-                            onDoubleTap: () async {
+                            onLongPress: () async {
                               var confirmDialogResponse =
                                   await showDialog<bool>(
                                         context: context,
