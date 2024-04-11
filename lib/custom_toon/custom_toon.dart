@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mini_app_tester/camera_page/camera_page_widget.dart';
 import 'package:mini_app_tester/q_r_code_page/q_r_code_page_widget.dart';
 
 generalHeader(headers) {
@@ -42,7 +43,10 @@ Future<dynamic> reqFunction(url, context) async {
       MaterialPageRoute(builder: (_) => QRCodePageWidget()),
     );
   } else if (url == "core://13A3/1.0.1/camera/open_camera") {
-    return "no function requested aaa";
+    return  await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => CameraPageWidget()),
+    );
   } else {
     return "no function requested";
   }

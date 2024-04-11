@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -61,10 +63,9 @@ class _CameraPageWidgetState extends State<CameraPageWidget> {
         }
       }
 
-      setState(() {
-        _model.photoBase64 = 'aaa';
-      });
-      context.safePop();
+      _model.photoBase64 = base64Encode(_model.uploadedLocalFile.bytes!);
+
+      Navigator.pop(context, _model.photoBase64);
     });
   }
 
