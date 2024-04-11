@@ -16,7 +16,7 @@ class GetMiniAppListByUserCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'getMiniAppListByUser',
-      apiUrl: 'https://superapp.kd3.dev/api/get_miniapp_list_by_user/${userID}',
+      apiUrl: 'https://superapp.kd3.dev/api/get_miniapp_list_tester/${userID}',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer ${token}',

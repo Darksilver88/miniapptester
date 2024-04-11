@@ -144,7 +144,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     future: (_model.apiRequestCompleter ??=
                             Completer<ApiCallResponse>()
                               ..complete(GetMiniAppListByUserCall.call(
-                                userID: '1',
+                                userID: getJsonField(
+                                  FFAppState().userData,
+                                  r'''$.user.user_id''',
+                                ).toString(),
                               )))
                         .future,
                     builder: (context, snapshot) {
