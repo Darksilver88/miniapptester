@@ -148,6 +148,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   FFAppState().userData,
                                   r'''$.user.user_id''',
                                 ).toString(),
+                                token: getJsonField(
+                                  FFAppState().userData,
+                                  r'''$.Token''',
+                                ).toString(),
                               )))
                         .future,
                     builder: (context, snapshot) {
@@ -233,6 +237,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         installedPath: getJsonField(
                                           _model.appData,
                                           r'''$.path''',
+                                        ).toString(),
+                                        token: getJsonField(
+                                          FFAppState().userData,
+                                          r'''$.Token''',
                                         ).toString(),
                                       );
                                       _shouldSetState = true;
@@ -331,6 +339,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           installedPath: getJsonField(
                                             _model.appData2,
                                             r'''$.path''',
+                                          ).toString(),
+                                          token: getJsonField(
+                                            FFAppState().userData,
+                                            r'''$.Token''',
                                           ).toString(),
                                         );
                                         _shouldSetState = true;
