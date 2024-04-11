@@ -114,7 +114,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ) ??
                                 false;
                             if (confirmDialogResponse) {
-                              setState(() {});
+                              setState(() {
+                                FFAppState().userData = null;
+                              });
+
+                              context.goNamed('LoginPage');
                             } else {
                               setState(() {});
                             }

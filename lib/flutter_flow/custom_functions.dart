@@ -19,3 +19,7 @@ int getAppIndex(
 dynamic isTrue() {
   return true;
 }
+
+dynamic isOne(int number) {
+  return (number == 1) ? true : false;
+}

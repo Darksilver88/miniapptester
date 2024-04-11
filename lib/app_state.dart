@@ -30,6 +30,15 @@ class FFAppState extends ChangeNotifier {
               }).toList() ??
               _installedAppDataList;
     });
+    _safeInit(() {
+      if (prefs.containsKey('ff_userData')) {
+        try {
+          _userData = jsonDecode(prefs.getString('ff_userData') ?? '');
+        } catch (e) {
+          print("Can't decode persisted json. Error: $e.");
+        }
+      }
+    });
   }
 
   void update(VoidCallback callback) {
@@ -78,6 +87,13 @@ class FFAppState extends ChangeNotifier {
     _installedAppDataList.insert(index, value);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
+  }
+
+  dynamic _userData;
+  dynamic get userData => _userData;
+  set userData(dynamic value) {
+    _userData = value;
+    prefs.setString('ff_userData', jsonEncode(value));
   }
 }
 

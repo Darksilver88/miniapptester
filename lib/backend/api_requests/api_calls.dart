@@ -93,6 +93,26 @@ class InstallMiniAppCall {
   }
 }
 
+class LoginuserCall {
+  static Future<ApiCallResponse> call({
+    String? username = '',
+    String? password = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'loginuser',
+      apiUrl: 'https://superapp.kd3.dev/api/login_user/$username/$password',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
