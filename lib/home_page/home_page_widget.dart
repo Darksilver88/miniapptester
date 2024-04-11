@@ -233,7 +233,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           appListItem,
                                           r'''$.app_id''',
                                         ).toString(),
-                                        userId: '1',
+                                        userId: getJsonField(
+                                          FFAppState().userData,
+                                          r'''$.user.user_id''',
+                                        ).toString(),
                                         installedPath: getJsonField(
                                           _model.appData,
                                           r'''$.path''',
@@ -335,7 +338,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             appListItem,
                                             r'''$.app_id''',
                                           ).toString(),
-                                          userId: '1',
+                                          userId: getJsonField(
+                                            FFAppState().userData,
+                                            r'''$.user.user_id''',
+                                          ).toString(),
                                           installedPath: getJsonField(
                                             _model.appData2,
                                             r'''$.path''',
