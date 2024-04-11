@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -14,10 +16,10 @@ class GetMiniAppListByUserCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'getMiniAppListByUser',
-      apiUrl: 'https://superapp.kd3.dev/api/get_miniapp_list_by_user/$userID',
+      apiUrl: 'https://superapp.kd3.dev/api/get_miniapp_list_by_user/${userID}',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${token}',
       },
       params: {},
       returnBody: true,
@@ -38,15 +40,15 @@ class UninstallAppCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "app_id": "$appID",
-  "user_id": "$userID"
+  "app_id": "${appID}",
+  "user_id": "${userID}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'uninstallApp',
       apiUrl: 'https://superapp.kd3.dev/api/uninstall_app',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${token}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -70,20 +72,40 @@ class InstallMiniAppCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "miniapp_id": "$miniappId",
-  "user_id": "$userId",
-  "installed_path": "$installedPath"
+  "miniapp_id": "${miniappId}",
+  "user_id": "${userId}",
+  "installed_path": "${installedPath}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'installMiniApp',
       apiUrl: 'https://superapp.kd3.dev/api/install_miniapp',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${token}',
       },
       params: {},
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class LoginuserCall {
+  static Future<ApiCallResponse> call({
+    String? username = '',
+    String? password = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'loginuser',
+      apiUrl: 'https://superapp.kd3.dev/api/login_user/${username}/${password}',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

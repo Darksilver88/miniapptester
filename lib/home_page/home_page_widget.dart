@@ -2,10 +2,12 @@ import '/backend/api_requests/api_calls.dart';
 import '/components/nodata_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'home_page_model.dart';
@@ -52,13 +54,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(
+              Container(
                 width: double.infinity,
                 height: 40.0,
                 child: Stack(
                   children: [
                     Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -80,10 +82,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                     ),
                     Align(
-                      alignment: const AlignmentDirectional(1.0, 0.0),
+                      alignment: AlignmentDirectional(1.0, 0.0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -95,17 +97,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   builder: (alertDialogContext) {
                                     return WebViewAware(
                                       child: AlertDialog(
-                                        title: const Text('Logout ?'),
+                                        title: Text('Logout ?'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
                                                 alertDialogContext, false),
-                                            child: const Text('Cancel'),
+                                            child: Text('Cancel'),
                                           ),
                                           TextButton(
                                             onPressed: () => Navigator.pop(
                                                 alertDialogContext, true),
-                                            child: const Text('Confirm'),
+                                            child: Text('Confirm'),
                                           ),
                                         ],
                                       ),
@@ -114,7 +116,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ) ??
                                 false;
                             if (confirmDialogResponse) {
-                              setState(() {});
+                              setState(() {
+                                FFAppState().userData = null;
+                              });
+
+                              context.goNamed('LoginPage');
                             } else {
                               setState(() {});
                             }
@@ -132,7 +138,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                   child: FutureBuilder<ApiCallResponse>(
                     future: (_model.apiRequestCompleter ??=
                             Completer<ApiCallResponse>()
@@ -164,7 +170,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             r'''$.data''',
                           ).toList();
                           if (appList.isEmpty) {
-                            return const NodataWidget();
+                            return NodataWidget();
                           }
                           return RefreshIndicator(
                             onRefresh: () async {
@@ -172,14 +178,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               await _model.waitForApiRequestCompleted();
                             },
                             child: GridView.builder(
-                              padding: const EdgeInsets.fromLTRB(
+                              padding: EdgeInsets.fromLTRB(
                                 0,
                                 16.0,
                                 0,
                                 16.0,
                               ),
                               gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 5,
                                 crossAxisSpacing: 10.0,
                                 mainAxisSpacing: 8.0,
@@ -195,7 +201,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    var shouldSetState = false;
+                                    var _shouldSetState = false;
                                     _model.isInstalled =
                                         await actions.checkIsInstalledApp(
                                       getJsonField(
@@ -203,7 +209,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         r'''$.app_id''',
                                       ).toString(),
                                     );
-                                    shouldSetState = true;
+                                    _shouldSetState = true;
                                     if (_model.isInstalled!) {
                                       _model.appData =
                                           await actions.getAppMinifestData(
@@ -212,7 +218,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           r'''$.app_id''',
                                         ).toString(),
                                       );
-                                      shouldSetState = true;
+                                      _shouldSetState = true;
                                       _model.apiResult2ow =
                                           await InstallMiniAppCall.call(
                                         miniappId: getJsonField(
@@ -225,7 +231,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           r'''$.path''',
                                         ).toString(),
                                       );
-                                      shouldSetState = true;
+                                      _shouldSetState = true;
                                       setState(() =>
                                           _model.apiRequestCompleter = null);
                                       await _model.waitForApiRequestCompleted();
@@ -252,7 +258,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     } else {
                                       _model.isGranted = await actions
                                           .checkPermissionStorage();
-                                      shouldSetState = true;
+                                      _shouldSetState = true;
                                       if (_model.isGranted!) {
                                         if (getJsonField(
                                               appListItem,
@@ -266,7 +272,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         (alertDialogContext) {
                                                       return WebViewAware(
                                                         child: AlertDialog(
-                                                          title: const Text(
+                                                          title: Text(
                                                               'Install App?'),
                                                           actions: [
                                                             TextButton(
@@ -274,7 +280,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   Navigator.pop(
                                                                       alertDialogContext,
                                                                       false),
-                                                              child: const Text(
+                                                              child: Text(
                                                                   'Cancel'),
                                                             ),
                                                             TextButton(
@@ -282,7 +288,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   Navigator.pop(
                                                                       alertDialogContext,
                                                                       true),
-                                                              child: const Text(
+                                                              child: Text(
                                                                   'Confirm'),
                                                             ),
                                                           ],
@@ -292,9 +298,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   ) ??
                                                   false;
                                           if (!confirmDialogResponse) {
-                                            if (shouldSetState) {
+                                            if (_shouldSetState)
                                               setState(() {});
-                                            }
                                             return;
                                           }
                                         }
@@ -309,7 +314,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             r'''$.app_id''',
                                           ).toString(),
                                         );
-                                        shouldSetState = true;
+                                        _shouldSetState = true;
                                         FFAppState().addToInstalledAppDataList(
                                             _model.appData2!);
                                         _model.apiResulttm4 =
@@ -324,7 +329,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             r'''$.path''',
                                           ).toString(),
                                         );
-                                        shouldSetState = true;
+                                        _shouldSetState = true;
                                         setState(() =>
                                             _model.apiRequestCompleter = null);
                                         await _model
@@ -352,7 +357,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       }
                                     }
 
-                                    if (shouldSetState) setState(() {});
+                                    if (_shouldSetState) setState(() {});
                                   },
                                   onLongPress: () async {
                                     var confirmDialogResponse =
@@ -361,21 +366,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               builder: (alertDialogContext) {
                                                 return WebViewAware(
                                                   child: AlertDialog(
-                                                    title: const Text('Uninstall ?'),
+                                                    title: Text('Uninstall ?'),
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () =>
                                                             Navigator.pop(
                                                                 alertDialogContext,
                                                                 false),
-                                                        child: const Text('Cancel'),
+                                                        child: Text('Cancel'),
                                                       ),
                                                       TextButton(
                                                         onPressed: () =>
                                                             Navigator.pop(
                                                                 alertDialogContext,
                                                                 true),
-                                                        child: const Text('Confirm'),
+                                                        child: Text('Confirm'),
                                                       ),
                                                     ],
                                                   ),
@@ -407,7 +412,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     }
                                   },
                                   child: Container(
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -417,7 +422,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           flex: 2,
                                           child: Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Stack(
                                               children: [
@@ -446,7 +451,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 ))
                                                   Align(
                                                     alignment:
-                                                        const AlignmentDirectional(
+                                                        AlignmentDirectional(
                                                             1.0, 1.0),
                                                     child: Icon(
                                                       Icons.check_circle,
@@ -464,7 +469,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         Expanded(
                                           child: Align(
                                             alignment:
-                                                const AlignmentDirectional(0.0, 0.0),
+                                                AlignmentDirectional(0.0, 0.0),
                                             child: Text(
                                               getJsonField(
                                                 appListItem,

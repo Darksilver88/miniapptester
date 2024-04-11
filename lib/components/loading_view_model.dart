@@ -1,11 +1,12 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'nodata_widget.dart' show NodataWidget;
+import 'loading_view_widget.dart' show LoadingViewWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class NodataModel extends FlutterFlowModel<NodataWidget> {
+class LoadingViewModel extends FlutterFlowModel<LoadingViewWidget> {
   @override
   void initState(BuildContext context) {}
 
