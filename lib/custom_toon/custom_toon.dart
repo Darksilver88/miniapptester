@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mini_app_tester/q_r_code_page/q_r_code_page_widget.dart';
 
 generalHeader(headers) {
   headers["Os"] = 'Android';
@@ -30,4 +32,18 @@ Future<dynamic> fetchData(url, data) async {
   }
   List<dynamic> jsonData = json.decode(response.body);
   return jsonData;
+}
+
+Future<dynamic> reqFunction(url, context) async {
+  print('reqFunction');
+  if (url == "core://13A3/1.0.1/qrscanner/open_qrscanner") {
+    return await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => QRCodePageWidget()),
+    );
+  } else if (url == "core://13A3/1.0.1/camera/open_camera") {
+    return "no function requested aaa";
+  } else {
+    return "no function requested";
+  }
 }

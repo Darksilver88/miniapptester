@@ -77,11 +77,9 @@ class _MiniAppPageWidgetState extends State<MiniAppPageWidget> {
     controller.addJavaScriptHandler(handlerName: "request", callback: (args) async {
       debugPrint("request From the JavaScript side:");
       debugPrint("$args");
+      debugPrint("${args[0]["url"]}");
       //request to use core feature
-      var rs = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => QRCodePageWidget()),
-      );
+      var rs = await reqFunction(args[0]["url"], context);
       return rs;
     });
   }
