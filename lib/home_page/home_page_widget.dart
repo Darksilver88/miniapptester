@@ -118,6 +118,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             if (confirmDialogResponse) {
                               setState(() {
                                 FFAppState().userData = null;
+                                FFAppState().installedAppDataList = [];
                               });
 
                               context.goNamed('LoginPage');

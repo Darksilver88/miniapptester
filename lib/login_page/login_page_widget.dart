@@ -265,6 +265,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       (_model.apiResult8le?.jsonBody ?? ''),
                                       r'''$.data''',
                                     );
+                                    FFAppState().installedAppDataList = [];
                                   });
 
                                   context.goNamed('HomePage');
