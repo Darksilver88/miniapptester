@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'nodata_model.dart';
 export 'nodata_model.dart';
 
@@ -36,7 +38,7 @@ class _NodataWidgetState extends State<NodataWidget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: const AlignmentDirectional(0.0, 0.0),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Text(
         'No data',
         style: FlutterFlowTheme.of(context).bodyMedium.override(

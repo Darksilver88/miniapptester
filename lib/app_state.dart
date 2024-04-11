@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'dart:convert';
@@ -50,50 +51,50 @@ class FFAppState extends ChangeNotifier {
 
   List<dynamic> _installedAppDataList = [];
   List<dynamic> get installedAppDataList => _installedAppDataList;
-  set installedAppDataList(List<dynamic> value) {
-    _installedAppDataList = value;
+  set installedAppDataList(List<dynamic> _value) {
+    _installedAppDataList = _value;
     prefs.setStringList(
-        'ff_installedAppDataList', value.map((x) => jsonEncode(x)).toList());
+        'ff_installedAppDataList', _value.map((x) => jsonEncode(x)).toList());
   }
 
-  void addToInstalledAppDataList(dynamic value) {
-    _installedAppDataList.add(value);
+  void addToInstalledAppDataList(dynamic _value) {
+    _installedAppDataList.add(_value);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeFromInstalledAppDataList(dynamic value) {
-    _installedAppDataList.remove(value);
+  void removeFromInstalledAppDataList(dynamic _value) {
+    _installedAppDataList.remove(_value);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeAtIndexFromInstalledAppDataList(int index) {
-    _installedAppDataList.removeAt(index);
+  void removeAtIndexFromInstalledAppDataList(int _index) {
+    _installedAppDataList.removeAt(_index);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
   void updateInstalledAppDataListAtIndex(
-    int index,
+    int _index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _installedAppDataList[index] = updateFn(_installedAppDataList[index]);
+    _installedAppDataList[_index] = updateFn(_installedAppDataList[_index]);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
-  void insertAtIndexInInstalledAppDataList(int index, dynamic value) {
-    _installedAppDataList.insert(index, value);
+  void insertAtIndexInInstalledAppDataList(int _index, dynamic _value) {
+    _installedAppDataList.insert(_index, _value);
     prefs.setStringList('ff_installedAppDataList',
         _installedAppDataList.map((x) => jsonEncode(x)).toList());
   }
 
   dynamic _userData;
   dynamic get userData => _userData;
-  set userData(dynamic value) {
-    _userData = value;
-    prefs.setString('ff_userData', jsonEncode(value));
+  set userData(dynamic _value) {
+    _userData = _value;
+    prefs.setString('ff_userData', jsonEncode(_value));
   }
 }
 

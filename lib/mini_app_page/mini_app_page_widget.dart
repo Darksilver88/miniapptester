@@ -1,7 +1,10 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'mini_app_page_model.dart';
 export 'mini_app_page_model.dart';
 
@@ -10,7 +13,7 @@ class MiniAppPageWidget extends StatefulWidget {
     super.key,
     String? appName,
     required this.url,
-  }) : appName = appName ?? 'mini app';
+  }) : this.appName = appName ?? 'mini app';
 
   final String appName;
   final String? url;
@@ -58,7 +61,7 @@ class _MiniAppPageWidgetState extends State<MiniAppPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: true,
           elevation: 2.0,
         ),
