@@ -416,7 +416,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           appListItem,
                                           r'''$.app_id''',
                                         ).toString(),
-                                        userID: '1',
+                                        userID: getJsonField(
+                                          FFAppState().userData,
+                                          r'''$.user.user_id''',
+                                        ).toString(),
                                       );
                                       FFAppState()
                                           .removeAtIndexFromInstalledAppDataList(
