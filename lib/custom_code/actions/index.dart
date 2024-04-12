@@ -5,3 +5,4 @@ export 'check_is_installed_app.dart' show checkIsInstalledApp;
 export 'get_app_minifest_data.dart' show getAppMinifestData;
 export 'check_permission_storage.dart' show checkPermissionStorage;
 export 'set_package.dart' show setPackage;
+export 'set_app_version.dart' show setAppVersion;

@@ -53,7 +53,7 @@ dependencies:
   json_path: 0.6.2
   lottie: 2.7.0
   mime_type: 1.0.0
-  package_info_plus:
+  package_info_plus: ^3.0.3
   page_transition: 2.1.0
   path_provider: 2.0.14
   path_provider_android: 2.0.25
@@ -95,6 +95,7 @@ dependency_overrides:
   http: 1.2.0
   pointer_interceptor: 0.10.1
   uuid: ^4.0.0
+  win32: 5.0.9
 
 dev_dependencies:
   flutter_lints: 3.0.0
