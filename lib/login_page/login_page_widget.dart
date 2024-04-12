@@ -164,7 +164,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
-                                minLines: null,
                                 validator: _model.textController1Validator
                                     .asValidator(context),
                               ),
@@ -241,7 +240,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
-                                minLines: null,
                                 validator: _model.textController2Validator
                                     .asValidator(context),
                               ),

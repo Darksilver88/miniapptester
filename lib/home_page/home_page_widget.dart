@@ -98,6 +98,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     return WebViewAware(
                                       child: AlertDialog(
                                         title: Text('Logout ?'),
+                                        content: Text(FFAppState().appVersion),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
