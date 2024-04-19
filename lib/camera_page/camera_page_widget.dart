@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:mini_app_tester/custom_toon/CustomCameraPage.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -29,7 +32,7 @@ class _CameraPageWidgetState extends State<CameraPageWidget> {
     _model = createModel(context, () => CameraPageModel());
 
     // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
+    /*SchedulerBinding.instance.addPostFrameCallback((_) async {
       final selectedMedia = await selectMedia(
         imageQuality: 80,
         multiImage: false,
@@ -66,7 +69,7 @@ class _CameraPageWidgetState extends State<CameraPageWidget> {
       _model.photoBase64 = base64Encode(_model.uploadedLocalFile.bytes!);
 
       Navigator.pop(context, _model.photoBase64);
-    });
+    });*/
   }
 
   @override
@@ -105,7 +108,11 @@ class _CameraPageWidgetState extends State<CameraPageWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            children: [],
+            children: [
+              Expanded(
+                child: CustomCameraPage(),
+              )
+            ],
           ),
         ),
       ),

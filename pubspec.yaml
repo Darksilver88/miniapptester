@@ -92,6 +92,7 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   #custom
+  camera: ^0.10.5+9
   flutter_inappwebview:
     path: /Users/anusornkongthong/development/flutter_project/flutter_inappwebview-5.8.0
 
