@@ -120,13 +120,11 @@ class _CustomCameraPageState extends State<CustomCameraPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Opacity(
-                        opacity: 0,
+                        opacity: 1,
                         child: InkWell(
                           onTap: () async {
                             FlashMode currentFlashMode = controller.value.flashMode;
-                            FlashMode nextFlashMode = currentFlashMode == FlashMode.off ? FlashMode.always : FlashMode.off;
-                            print("nextFlashMode");
-                            print(nextFlashMode.toString());
+                            FlashMode nextFlashMode = currentFlashMode == FlashMode.off ? FlashMode.torch : FlashMode.off;
                             await controller.setFlashMode(nextFlashMode);
                           },
                           child: Container(
