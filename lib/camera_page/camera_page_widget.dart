@@ -1,9 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'camera_page_model.dart';
@@ -25,47 +23,6 @@ class _CameraPageWidgetState extends State<CameraPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CameraPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      final selectedMedia = await selectMedia(
-        imageQuality: 80,
-        multiImage: false,
-      );
-      if (selectedMedia != null &&
-          selectedMedia
-              .every((m) => validateFileFormat(m.storagePath, context))) {
-        setState(() => _model.isDataUploading = true);
-        var selectedUploadedFiles = <FFUploadedFile>[];
-
-        try {
-          selectedUploadedFiles = selectedMedia
-              .map((m) => FFUploadedFile(
-                    name: m.storagePath.split('/').last,
-                    bytes: m.bytes,
-                    height: m.dimensions?.height,
-                    width: m.dimensions?.width,
-                    blurHash: m.blurHash,
-                  ))
-              .toList();
-        } finally {
-          _model.isDataUploading = false;
-        }
-        if (selectedUploadedFiles.length == selectedMedia.length) {
-          setState(() {
-            _model.uploadedLocalFile = selectedUploadedFiles.first;
-          });
-        } else {
-          setState(() {});
-          return;
-        }
-      }
-
-      setState(() {
-        _model.photoBase64 = 'aaa';
-      });
-      context.safePop();
-    });
   }
 
   @override
