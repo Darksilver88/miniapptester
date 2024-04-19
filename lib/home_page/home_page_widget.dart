@@ -88,21 +88,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      3.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    '(${FFAppState().appVersion})',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 10.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
+                                Text(
+                                  '(${FFAppState().appVersion})',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 10.0,
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                               ],
                             ),
@@ -127,7 +123,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     return WebViewAware(
                                       child: AlertDialog(
                                         title: Text('Logout ?'),
-                                        content: Text(FFAppState().appVersion),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
