@@ -1,3 +1,5 @@
+import 'package:mini_app_tester/custom_toon/CustomCameraPage.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
