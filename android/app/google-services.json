@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "274952073029",
+    "project_id": "mini-app-tester-muuc3n",
+    "storage_bucket": "mini-app-tester-muuc3n.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274952073029:android:9eb35a7093fa43e320d82c",
+        "android_client_info": {
+          "package_name": "com.silver.miniapptester"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPyiYtSxNwcmPWKsaN0AKo88OVGfD5ajg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
