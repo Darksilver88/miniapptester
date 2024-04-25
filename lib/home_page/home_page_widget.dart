@@ -485,12 +485,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       appListItem,
                                                       r'''$.icon''',
                                                     ).toString(),
+                                                    width: double.infinity,
+                                                    height: double.infinity,
                                                     fit: BoxFit.cover,
                                                     errorBuilder: (context,
                                                             error,
                                                             stackTrace) =>
                                                         Image.asset(
                                                       'assets/images/error_image.jpg',
+                                                      width: double.infinity,
+                                                      height: double.infinity,
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
