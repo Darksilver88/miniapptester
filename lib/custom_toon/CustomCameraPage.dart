@@ -27,6 +27,8 @@ class _CustomCameraPageState extends State<CustomCameraPage> {
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _cameras = await availableCameras();
+      print("_cameras_cameras");
+      print(_cameras);
       controller = CameraController(_cameras[0], ResolutionPreset.max);
       controller.initialize().then((_) {
         if (!mounted) {

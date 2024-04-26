@@ -57,7 +57,8 @@
     <string>In order to scan for barcodes and QR codes, this app requires permission to access the camera.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Allowing us to access your photo library will enable you to save images or files.</string>
-
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Allowing us to access your mircrophone library will enable you to uploading audio.</string>
 
 
 	<key>UILaunchStoryboardName</key>
