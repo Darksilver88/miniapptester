@@ -407,58 +407,66 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     if (_shouldSetState) setState(() {});
                                   },
                                   onLongPress: () async {
-                                    var confirmDialogResponse =
-                                        await showDialog<bool>(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return WebViewAware(
-                                                  child: AlertDialog(
-                                                    title: Text('Uninstall ?'),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext,
-                                                                false),
-                                                        child: Text('Cancel'),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext,
-                                                                true),
-                                                        child: Text('Confirm'),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ) ??
-                                            false;
-                                    if (confirmDialogResponse) {
-                                      await UninstallAppCall.call(
-                                        appID: getJsonField(
-                                          appListItem,
-                                          r'''$.app_id''',
-                                        ).toString(),
-                                        userID: getJsonField(
-                                          FFAppState().userData,
-                                          r'''$.user.user_id''',
-                                        ).toString(),
-                                      );
-                                      FFAppState()
-                                          .removeAtIndexFromInstalledAppDataList(
-                                              functions.getAppIndex(
-                                                  getJsonField(
-                                                    appListItem,
-                                                    r'''$.app_id''',
-                                                  ).toString(),
-                                                  FFAppState()
-                                                      .installedAppDataList
-                                                      .toList()));
-                                      setState(() =>
-                                          _model.apiRequestCompleter = null);
-                                      await _model.waitForApiRequestCompleted();
+                                    if (getJsonField(
+                                      appListItem,
+                                      r'''$.is_install''',
+                                    )) {
+                                      var confirmDialogResponse =
+                                          await showDialog<bool>(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return WebViewAware(
+                                                    child: AlertDialog(
+                                                      title:
+                                                          Text('Uninstall ?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: Text('Cancel'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child:
+                                                              Text('Confirm'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              ) ??
+                                              false;
+                                      if (confirmDialogResponse) {
+                                        await UninstallAppCall.call(
+                                          appID: getJsonField(
+                                            appListItem,
+                                            r'''$.app_id''',
+                                          ).toString(),
+                                          userID: getJsonField(
+                                            FFAppState().userData,
+                                            r'''$.user.user_id''',
+                                          ).toString(),
+                                        );
+                                        FFAppState()
+                                            .removeAtIndexFromInstalledAppDataList(
+                                                functions.getAppIndex(
+                                                    getJsonField(
+                                                      appListItem,
+                                                      r'''$.app_id''',
+                                                    ).toString(),
+                                                    FFAppState()
+                                                        .installedAppDataList
+                                                        .toList()));
+                                        setState(() =>
+                                            _model.apiRequestCompleter = null);
+                                        await _model
+                                            .waitForApiRequestCompleted();
+                                      }
                                     }
                                   },
                                   child: Container(
