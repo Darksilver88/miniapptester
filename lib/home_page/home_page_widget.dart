@@ -91,14 +91,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.totalTap = _model.totalTap! + 1;
                                     if (_model.totalTap! > 11) {
+                                      _model.totalTap = 0;
+
                                       context.pushNamed('TestKetCloakPage');
                                     } else {
-                                      if (_model.totalTap == 8) {
+                                      if (_model.totalTap! >= 8) {
+                                        ScaffoldMessenger.of(context)
+                                            .clearSnackBars();
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              'now 8 times next to 11 for demon dev',
+                                              'now ${_model.totalTap?.toString()} times next to 11 for demon dev',
                                               style: TextStyle(
                                                 color:
                                                     FlutterFlowTheme.of(context)
