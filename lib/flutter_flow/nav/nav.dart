@@ -76,6 +76,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CameraPage',
           path: '/cameraPage',
           builder: (context, params) => CameraPageWidget(),
+        ),
+        FFRoute(
+          name: 'TestKetCloakPage',
+          path: '/testKetCloakPage',
+          builder: (context, params) => TestKetCloakPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

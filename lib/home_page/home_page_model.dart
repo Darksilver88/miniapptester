@@ -3,6 +3,7 @@ import '/components/nodata_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/instant_timer.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
@@ -18,9 +19,12 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   String? tmpPath;
 
+  int? totalTap = 0;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  InstantTimer? instantTimer;
   Completer<ApiCallResponse>? apiRequestCompleter;
   // Stores action output result for [Custom Action - checkIsInstalledApp] action in Container widget.
   bool? isInstalled;
@@ -41,6 +45,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
+    instantTimer?.cancel();
   }
 
   /// Additional helper methods.
