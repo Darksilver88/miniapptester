@@ -35,7 +35,57 @@ Future<dynamic> fetchData(url, data) async {
   return jsonData;
 }
 
+Map<String, dynamic> getCmd(String cmd){
+
+  cmd = cmd.replaceAll("//", "/");
+  cmd = cmd.replaceAll(":", "");
+  List<String> cmdList = cmd.split("/");
+  Map<String, dynamic> cmdResult = {};
+
+  //เพิ่มการตรวจสอบ uri ตรงนี้หน่อยครับ ดักการเรียกที่ไม่ถูกต้อง , การเรียกในสิ่งที่ไม่มีให้ใช้
+  if( cmdList.length < 4) {
+    cmdResult["status"] = -1;
+    cmdResult["message"] = "Invalid URI";
+  } else {
+    cmdResult["status"] = 1;
+    cmdResult["cmd"] = cmdList;
+    //เพิ่มการดึง parameter ออกมาด้วยครับ
+    // cmdResult["query"] = "";
+  }
+
+  return cmdResult;
+
+}
+
 Future<dynamic> reqFunction(url, context) async {
+  Map<String, dynamic> cmd = getCmd(url);
+  int status = cmd["status"];
+  if( status == -1){
+    return  cmd["message"];
+  }
+  List<String> cmdList = cmd["cmd"];
+  String featureName = cmdList[3];
+  String functionName = cmdList.length <= 4 ? "" : cmdList[4];
+  debugPrint("featureName=$featureName");
+  debugPrint("functionName=$functionName");
+
+  if( featureName == "qrscanner"){
+    return await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => QRCodePageWidget()),
+    );
+  } else if (featureName == "camera") {
+    return  await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => CameraPageWidget()),
+    );
+  } else if (featureName == "get_miniapp_manifest") {
+    //เพิ่มการอ่าน minifest file ของ miniapp แล้วตอบกลับไป
+    return null;
+  } else {
+    return "no function requested";
+  }
+
   print('reqFunction');
   if (url == "core://13A3/1.0.1/qrscanner/open_qrscanner") {
     return await Navigator.push(
