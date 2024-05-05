@@ -46,15 +46,20 @@ Map<String, dynamic> getCmd(String cmd){
   if( cmdList.length < 4) {
     cmdResult["status"] = -1;
     cmdResult["message"] = "Invalid URI";
-  } else {
-    cmdResult["status"] = 1;
-    cmdResult["cmd"] = cmdList;
-    //เพิ่มการดึง parameter ออกมาด้วยครับ
-    // cmdResult["query"] = {"param1": "valu1", "param2": "valu2"};
+    return cmdResult;
   }
 
-  return cmdResult;
+  if( cmdList[0] != "core" ) {
+    cmdResult["status"] = -1;
+    cmdResult["message"] = "Invalid URI";
+    return cmdResult;
+  }
 
+  cmdResult["status"] = 1;
+  cmdResult["cmd"] = cmdList;
+  //เพิ่มการดึง parameter ออกมาด้วยครับ
+  // cmdResult["query"] = {"param1": "valu1", "param2": "valu2"};
+  return cmdResult;
 }
 
 Future<dynamic> reqFunction(url, context) async {
