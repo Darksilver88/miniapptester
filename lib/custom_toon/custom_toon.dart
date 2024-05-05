@@ -85,7 +85,7 @@ Future<dynamic> reqFunction(url, context) async {
   } else {
     return "no function requested";
   }
-
+/*
   print('reqFunction');
   if (url == "core://13A3/1.0.1/qrscanner/open_qrscanner") {
     return await Navigator.push(
@@ -99,5 +99,5 @@ Future<dynamic> reqFunction(url, context) async {
     );
   } else {
     return "no function requested";
-  }
+  }*/
 }
