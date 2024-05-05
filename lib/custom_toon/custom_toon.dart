@@ -50,7 +50,7 @@ Map<String, dynamic> getCmd(String cmd){
     cmdResult["status"] = 1;
     cmdResult["cmd"] = cmdList;
     //เพิ่มการดึง parameter ออกมาด้วยครับ
-    // cmdResult["query"] = "";
+    // cmdResult["query"] = {"param1": "valu1", "param2": "valu2"};
   }
 
   return cmdResult;
